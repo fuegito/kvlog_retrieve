@@ -43,7 +43,7 @@ class KVLogRetrieve
       if datetime.is_a? DateTime
         @start = datetime
       else
-        raise(ArgumentError, "provide: :start => [YYYYMMDD HH:MM:SS|last_month|last_week|this_month|this_week|yesterday|today]") if datetime.nil? || datetime.empty?
+        raise(ArgumentError, "provide: :start => [YYYYMMDD HH:MM:SS|last_month|last_week|this_month|this_week|yesterday|today]") if datetime.nil?
         if datetime == "this_week"
           @start = DateTime.now.beginning_of_week
           @stop = DateTime.now.end_of_week

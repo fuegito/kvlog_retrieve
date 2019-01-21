@@ -23,9 +23,7 @@ class KVLogRetrieve
       path = %w[/usr/bin /usr/local/bin /bin /opt/bin /usr/sbin /usr/local/sbin /sbin]
       Array(path).flatten.compact.each do |p|
         executable_path = File.join(p, executable)
-        if File.executable?(executable_path)
-          return "#{executable_path} #{args} " 
-        end
+        return "#{executable_path} #{args} " if File.executable?(executable_path)
       end
       raise ExecutableNotFoundError
     end
@@ -150,7 +148,7 @@ class KVLogRetrieve
                 else
                   logger.info('Error processing line: "' + line.chomp + '"') if logger
                   throw :next_line
-                end                  
+                end
               rescue StandardError => error
                 logger.info("StandardError -> " + error.inspect) if logger
                 logger.info('Error processing line: "' + line.chomp + '"') if logger

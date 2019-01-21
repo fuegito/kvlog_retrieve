@@ -17,8 +17,8 @@ class KVLogRetrieve
     end
 
     def stop=(datetime)
-      if datetime.is_a? DateTime
-        @stop = datetime
+      if datetime.is_a?(DateTime) || datetime.is_a?(Date) || datetime.is_a?(Time)
+        @stop = datetime.to_datetime
       else
         return if datetime.blank?
         if datetime == "this_week"

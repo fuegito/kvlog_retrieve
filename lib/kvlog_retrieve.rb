@@ -53,7 +53,16 @@ class KVLogRetrieve
           hash[dt] << f
         end
       end
-      good = hash.sort.to_h.keys.select { |k| (k >= range.first) && (k <= range.last) }
+      good = hash.sort.to_h.keys.select do |k|
+        # TODO: the following isn't exactly a perfect solution
+        # it seems like older files make it to the list as well.
+        # No problem in outcome due to date filtering later but waste of resource.
+        if k == k.beginning_of_day
+          (k >= range.first.beginning_of_day) && (k <= range.last.beginning_of_day)
+        else
+          (k >= range.first) && (k <= range.last)
+        end
+      end
       unless good.first == range.first
         if good.empty?
           good.unshift(hash.keys.sort.last)
